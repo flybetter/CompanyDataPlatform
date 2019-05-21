@@ -1,0 +1,1 @@
+the file is store the impala file jar, detail please read the impala official web site
