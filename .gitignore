@@ -7,3 +7,5 @@ target/
 project.iml
 sonar-project.properties
 .scannerwork/
+target/
+src/main/lib/

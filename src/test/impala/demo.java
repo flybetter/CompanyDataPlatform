@@ -1,9 +1,10 @@
-package cc.mrbird.common.impala;
+package impala;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
 
 public class demo {
     private static String JDBC_DRIVER = "com.cloudera.impala.jdbc41.Driver";
@@ -33,7 +34,7 @@ public class demo {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            JDBCUtils.disconnect(connection, rs, ps);
+//            JDBCUtils.disconnect(connection, rs, ps);
         }
     }
 }
