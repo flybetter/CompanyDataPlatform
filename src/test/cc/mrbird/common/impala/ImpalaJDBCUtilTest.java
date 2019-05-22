@@ -28,3 +28,8 @@ public class ImpalaJDBCUtilTest {
         objects.forEach(System.out::println);
     }
 }
+
+
+
+
+

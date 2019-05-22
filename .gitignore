@@ -9,3 +9,5 @@ sonar-project.properties
 .scannerwork/
 target/
 src/main/lib/
+screenshots
+src/main/resources/img/
