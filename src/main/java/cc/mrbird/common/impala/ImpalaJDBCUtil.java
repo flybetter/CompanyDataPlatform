@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.jdbc.support.JdbcUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+
 
 /**
  * 对jdbc的完整封装
@@ -21,6 +24,7 @@ public class ImpalaJDBCUtil {
     public  String driver = null;
     @Value("${impala.url}")
     public  String url = null;
+
 
 //    private static String username = null;
 //    private static String password = null;
