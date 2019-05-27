@@ -2,7 +2,10 @@ package cc.mrbird.common.impala;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,15 +20,19 @@ import java.util.Map;
 @EnableAutoConfiguration
 public class SpringJdbcTest {
 
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
+    @Qualifier("secondaryJdbcTemplate")
     private JdbcTemplate jdbcTemplate;
 
     @Test
     public void testDemo() {
 
-        int result = jdbcTemplate.queryForObject("select count(*) from customers;", Integer.class);
+        List<Map<String, Object>> objects=jdbcTemplate.queryForList("select count(*) from newhouselog;");
 
-        System.out.println(result);
+//        logger.info();
 
 
     }
