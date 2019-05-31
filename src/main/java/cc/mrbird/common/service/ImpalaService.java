@@ -5,5 +5,5 @@ import java.util.Map;
 
 public interface ImpalaService<T> {
 
-    List<T> queryCountList(String startDate, String endDate, String deviceId);
+    String queryCountList(String startDate, String endDate, String deviceId);
 }

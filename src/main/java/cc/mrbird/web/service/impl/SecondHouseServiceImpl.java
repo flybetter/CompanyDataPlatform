@@ -1,7 +1,10 @@
 package cc.mrbird.web.service.impl;
 
+import cc.mrbird.web.domain.CountDate;
 import cc.mrbird.web.service.HouseService;
 import cc.mrbird.web.service.SecondHouseService;
+import com.alibaba.fastjson.JSON;
+import org.apache.avro.data.Json;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,11 +24,11 @@ public class SecondHouseServiceImpl<T> extends HouseService<T> implements Second
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<T> queryCountList(String startDate, String endDate, String deviceId) {
+    public String queryCountList(String startDate, String endDate, String deviceId) {
         String sql = super.getHouseCountSql(startDate, endDate, "secondhouselog", deviceId);
-        List<T> objects = (List<T>) jdbcTemplate.queryForList(sql);
-        return objects;
+        List<CountDate> objects = (List<CountDate>) jdbcTemplate.query(sql, new BeanPropertyRowMapper<CountDate>(CountDate.class));
+        long[][] result = super.getHouseResult(objects);
+        return JSON.toJSONString(result);
     }
-
 
 }

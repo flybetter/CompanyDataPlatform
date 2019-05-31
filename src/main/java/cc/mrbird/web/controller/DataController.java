@@ -4,6 +4,7 @@ import cc.mrbird.common.annotation.Log;
 import cc.mrbird.common.domain.ResponseBo;
 import cc.mrbird.web.service.NewHouseService;
 import cc.mrbird.web.service.SecondHouseService;
+import com.alibaba.fastjson.JSON;
 import com.sun.tools.corba.se.idl.StringGen;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
@@ -37,7 +38,8 @@ public class DataController {
     public ResponseBo newHouseList(String startDate, String endDate, String deviceId) {
         try {
             Object object = newHouseService.queryCountList(startDate, endDate, deviceId);
-            return ResponseBo.ok(object);
+            logger.info(JSON.toJSONString(object));
+            return ResponseBo.ok(JSON.toJSONString(object));
         } catch (Exception e) {
             logger.error("统计新房浏览量失败", e);
             return ResponseBo.error("统计新房浏览量失败");

@@ -16,7 +16,7 @@ public class DateUtil {
         return simformat.format(date);
     }
 
-    private static Date getDateParse(String date, String dateFormatType) {
+    public static Date getDateParse(String date, String dateFormatType) {
         SimpleDateFormat simformat = new SimpleDateFormat(dateFormatType);
         try {
             return simformat.parse(date);

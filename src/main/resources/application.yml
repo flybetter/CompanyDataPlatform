@@ -8,7 +8,7 @@ spring:
       # 数据库访问配置, 使用druid数据源 
       db-type: com.alibaba.druid.pool.DruidDataSource
       driverClassName: com.mysql.jdbc.Driver
-      url: jdbc:mysql://192.168.10.221:3306/mrbird?useUnicode=true&characterEncoding=utf8
+      url: jdbc:mysql://192.168.10.221:3306/mrbird??useSSL=false&useUnicode=true&characterEncoding=utf8
       username: root
       password: idontcare
       # 连接池配置
@@ -80,9 +80,9 @@ spring:
         # 连接池最大连接数（使用负值表示没有限制）
         max-active: 2000
         # 连接池最大阻塞等待时间（使用负值表示没有限制）
-        max-wait: 10000s
+        max-wait: 10000
     # 连接超时时间（毫秒）
-    timeout: 0s
+    timeout: 0
 
   thymeleaf:
     cache: false
