@@ -6,90 +6,168 @@ $(document).ready(function () {
             useUTC: false
         }
     });
-
-    var newHouseListData ;
-
-    $.ajaxSetup({async:false});
-
+    var newhousechart = null;
+    var secondhousechart=null;
     $.getJSON(ctx + 'data/newHouseList', function (data) {
-        newHouseListData = JSON.parse(data.msg)
-    })
+        newhousechart = Highcharts.chart('container', {
+            chart: {
+                zoomType: 'x'
+            },
+            title: {
+                text: '新房点击率'
+            },
+            subtitle: {
+                text: document.ontouchstart === undefined ?
+                    '鼠标拖动可以进行缩放' : '手势操作进行缩放'
+            },
+            xAxis: {
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                    millisecond: '%H:%M:%S.%L',
+                    second: '%H:%M:%S',
+                    minute: '%H:%M',
+                    hour: '%H:%M',
+                    day: '%m-%d',
+                    week: '%m-%d',
+                    month: '%Y-%m',
+                    year: '%Y'
+                }
+            },
+            tooltip: {
+                dateTimeLabelFormats: {
+                    millisecond: '%H:%M:%S.%L',
+                    second: '%H:%M:%S',
+                    minute: '%H:%M',
+                    hour: '%H:%M',
+                    day: '%Y-%m-%d',
+                    week: '%m-%d',
+                    month: '%Y-%m',
+                    year: '%Y'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: '点击数'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
 
-    var secondHouseListData;
+            series: [{
+                type: 'area',
+                name: '点击次数',
+                data: JSON.parse(data.msg)
+            }]
+        });
+    });
+
 
     $.getJSON(ctx + 'data/secondHouseList', function (data) {
-        secondHouseListData = JSON.parse(data.msg)
-    })
+        secondhousechart = Highcharts.chart('keysChart', {
+            chart: {
+                zoomType: 'x'
+            },
+            title: {
+                text: '新房点击率'
+            },
+            subtitle: {
+                text: document.ontouchstart === undefined ?
+                    '鼠标拖动可以进行缩放' : '手势操作进行缩放'
+            },
+            xAxis: {
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                    millisecond: '%H:%M:%S.%L',
+                    second: '%H:%M:%S',
+                    minute: '%H:%M',
+                    hour: '%H:%M',
+                    day: '%m-%d',
+                    week: '%m-%d',
+                    month: '%Y-%m',
+                    year: '%Y'
+                }
+            },
+            tooltip: {
+                dateTimeLabelFormats: {
+                    millisecond: '%H:%M:%S.%L',
+                    second: '%H:%M:%S',
+                    minute: '%H:%M',
+                    hour: '%H:%M',
+                    day: '%Y-%m-%d',
+                    week: '%m-%d',
+                    month: '%Y-%m',
+                    year: '%Y'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: '点击数'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
 
-    var series = [{
-        name: '新房',
-        data: newHouseListData
-    }];
-
-    var chart = {
-        type: 'spline'
-    };
-    var title = {
-        text: 'Snow depth at Vikjafjellet, Norway'
-    };
-    var subtitle = {
-        text: 'Irregular time data in Highcharts JS'
-    };
-    var xAxis = {
-        type: 'datetime',
-        dateTimeLabelFormats: { // don't display the dummy year
-            month: '%e. %b',
-            year: '%b'
-        },
-        title: {
-            text: 'Date'
-        }
-    };
-    var yAxis = {
-        title: {
-            text: 'Snow depth (m)'
-        },
-        min: 0
-    };
-    var tooltip = {
-        headerFormat: '<b>{series.name}</b><br>',
-        pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
-    };
-    var plotOptions = {
-        spline: {
-            marker: {
-                enabled: true
-            }
-        }
-    };
-
-    var json = {};
-    json.chart = chart;
-    json.title = title;
-    json.subtitle = subtitle;
-    json.tooltip = tooltip;
-    json.xAxis = xAxis;
-    json.yAxis = yAxis;
-    json.series = series;
-    json.plotOptions = plotOptions;
-    $('#container').highcharts(json);
-
-    var series_2 = [{
-        name: '二手房',
-        data: secondHouseListData
-    }];
-
-    var json2 = {};
-    json2.chart = chart;
-    json2.title = title;
-    json2.subtitle = subtitle;
-    json2.tooltip = tooltip;
-    json2.xAxis = xAxis;
-    json2.yAxis = yAxis;
-    json2.series = series;
-    json2.plotOptions = plotOptions;
-    json2.series=series_2
-    $('#keysChart').highcharts(json2);
+            series: [{
+                type: 'area',
+                name: '点击次数',
+                data: JSON.parse(data.msg)
+            }]
+        });
+    });
 
 
 });

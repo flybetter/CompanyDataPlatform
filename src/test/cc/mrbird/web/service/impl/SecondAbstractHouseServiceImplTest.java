@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @EnableAutoConfiguration
-public class SecondHouseServiceImplTest {
+public class SecondAbstractHouseServiceImplTest {
 
     @Autowired
     private SecondHouseService secondHouseService;

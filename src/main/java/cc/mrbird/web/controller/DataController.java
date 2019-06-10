@@ -1,6 +1,7 @@
 package cc.mrbird.web.controller;
 
 import cc.mrbird.common.annotation.Log;
+import cc.mrbird.common.controller.BaseController;
 import cc.mrbird.common.domain.ResponseBo;
 import cc.mrbird.web.service.NewHouseService;
 import cc.mrbird.web.service.SecondHouseService;
@@ -16,7 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
-public class DataController {
+@RequestMapping("data")
+public class DataController extends BaseController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -27,29 +29,27 @@ public class DataController {
     private SecondHouseService secondHouseService;
 
     @Log("获取所有数据")
-    @RequestMapping("data")
+    @RequestMapping("")
     @RequiresPermissions("data:list")
     public String index() {
         return "web/data/data";
     }
 
-    @RequestMapping("data/newHouseList")
+    @RequestMapping("newHouseList")
     @ResponseBody
     public ResponseBo newHouseList(String startDate, String endDate, String deviceId) {
         try {
             Object object = newHouseService.queryCountList(startDate, endDate, deviceId);
-            logger.info(JSON.toJSONString(object));
-            return ResponseBo.ok(JSON.toJSONString(object));
+            return ResponseBo.ok(object);
         } catch (Exception e) {
             logger.error("统计新房浏览量失败", e);
             return ResponseBo.error("统计新房浏览量失败");
         }
     }
 
-    @RequestMapping("data/secondHouseList")
+    @RequestMapping("secondHouseList")
     @ResponseBody
     public ResponseBo secondHouseList(String startDate, String endDate, String deviceId) {
-
         try {
             Object object = secondHouseService.queryCountList(startDate, endDate, deviceId);
             return ResponseBo.ok(object);
@@ -59,5 +59,20 @@ public class DataController {
         }
     }
 
+
+    @Log("获取新房所有数据")
+    @RequestMapping("newHouseDetail")
+    @RequiresPermissions("data:newHouseDetail")
+    public String newHouseDetail() {
+        return "web/data/newHouseDetail";
+    }
+
+
+    @Log("获取二手房所有数据")
+    @RequestMapping("secondHouseDetail")
+    @RequiresPermissions("data:secondHouseDetail")
+    public String secondHouseDetail() {
+        return "web/data/secondHouseDetail";
+    }
 
 }
