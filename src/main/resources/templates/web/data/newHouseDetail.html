@@ -3,39 +3,39 @@
         <div class="table-responsive">
             <div id="data-table_wrapper" class="dataTables_wrapper">
                 <div class="dataTables_buttons hidden-sm-down actions">
-                    <span class="actions__item zmdi zmdi-search" onclick="search()" title="搜索" />
-                    <span class="actions__item zmdi zmdi-refresh-alt" onclick="refresh()" title="刷新" />
+                    <span class="actions__item zmdi zmdi-search" onclick="search()" title="搜索"/>
+                    <span class="actions__item zmdi zmdi-refresh-alt" onclick="refresh()" title="刷新"/>
                     <!--<div class="dropdown actions__item">-->
-                        <!--<i data-toggle="dropdown" class="zmdi zmdi-download">-->
-		            <!--</i>-->
-                        <!--<ul class="dropdown-menu dropdown-menu-right">-->
-                            <!--<a href="javascript:void(0)" class="dropdown-item" data-table-action="excel" onclick="exportDictExcel()">-->
-		                    <!--Excel (.xlsx)-->
-		                <!--</a>-->
-                            <!--<a href="javascript:void(0)" class="dropdown-item" data-table-action="csv" onclick="exportDictCsv()">-->
-		                    <!--CSV (.csv)-->
-		                <!--</a>-->
-                        <!--</ul>-->
+                    <!--<i data-toggle="dropdown" class="zmdi zmdi-download">-->
+                    <!--</i>-->
+                    <!--<ul class="dropdown-menu dropdown-menu-right">-->
+                    <!--<a href="javascript:void(0)" class="dropdown-item" data-table-action="excel" onclick="exportDictExcel()">-->
+                    <!--Excel (.xlsx)-->
+                    <!--</a>-->
+                    <!--<a href="javascript:void(0)" class="dropdown-item" data-table-action="csv" onclick="exportDictCsv()">-->
+                    <!--CSV (.csv)-->
+                    <!--</a>-->
+                    <!--</ul>-->
                     <!--</div>-->
                     <!--<div class="dropdown actions__item" shiro:hasAnyPermissions="dict:add,dict:update,dict:delete">-->
-                        <!--<i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>-->
-                        <!--<div class="dropdown-menu dropdown-menu-right">-->
-                            <!--<a href="javascript:void(0)" class="dropdown-item" data-toggle="modal" data-target="#dict-add" shiro:hasPermission="dict:add">新增字典</a>-->
-                            <!--<a href="javascript:void(0)" class="dropdown-item" onclick="updateDict()" shiro:hasPermission="dict:update">修改字典</a>-->
-                            <!--<a href="javascript:void(0)" class="dropdown-item" onclick="deleteDicts()" shiro:hasPermission="dict:delete">删除字典</a>-->
-                        <!--</div>-->
+                    <!--<i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>-->
+                    <!--<div class="dropdown-menu dropdown-menu-right">-->
+                    <!--<a href="javascript:void(0)" class="dropdown-item" data-toggle="modal" data-target="#dict-add" shiro:hasPermission="dict:add">新增字典</a>-->
+                    <!--<a href="javascript:void(0)" class="dropdown-item" onclick="updateDict()" shiro:hasPermission="dict:update">修改字典</a>-->
+                    <!--<a href="javascript:void(0)" class="dropdown-item" onclick="deleteDicts()" shiro:hasPermission="dict:delete">删除字典</a>-->
+                    <!--</div>-->
                     <!--</div>-->
                 </div>
                 <div id="data-table_filter" class="dataTables_filter">
-                    <form class="dict-table-form">
+                    <form class="newhouse-table-form">
                         <div class="row">
                             <div class="col-sm-3">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-					               	键：
+					               	开始时间：
 					            </span>
                                     <div class="form-group">
-                                        <input type="text" name="keyy" class="form-control">
+                                        <input type="text" name="startDate" class="form-control">
                                         <i class="form-group__bar"></i>
                                     </div>
                                 </div>
@@ -43,10 +43,10 @@
                             <div class="col-sm-3">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-					               	值：
+					               	结束时间：
 					            </span>
                                     <div class="form-group">
-                                        <input type="text" name="valuee" class="form-control">
+                                        <input type="text" name="endDate" class="form-control">
                                         <i class="form-group__bar"></i>
                                     </div>
                                 </div>
@@ -54,21 +54,10 @@
                             <div class="col-sm-3">
                                 <div class="input-group">
                                     <span class="input-group-addon">
-					               	表名：
+					               	设备id：
 					            </span>
                                     <div class="form-group">
-                                        <input type="text" name="tableName" class="form-control">
-                                        <i class="form-group__bar"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-					               	字段名：
-					            </span>
-                                    <div class="form-group">
-                                        <input type="text" name="fieldName" class="form-control">
+                                        <input type="text" name="deviceId" class="form-control">
                                         <i class="form-group__bar"></i>
                                     </div>
                                 </div>
@@ -77,11 +66,11 @@
                     </form>
                 </div>
                 <div class="table-responsive">
-                    <table id="dictTable" data-mobile-responsive="true" class="mb-bootstrap-table text-nowrap"></table>
+                    <table id="newhouseTable" data-mobile-responsive="true" class="mb-bootstrap-table text-nowrap"></table>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!--<script data-th-src="@{js/app/system/dict/dict.js}"></script>-->
+<script data-th-src="@{js/app/system/data/newhouse.js}"></script>
 <!--<script data-th-src="@{js/app/system/dict/dictEdit.js}"></script>-->

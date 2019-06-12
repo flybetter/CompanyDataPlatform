@@ -2,6 +2,7 @@ package cc.mrbird.web.controller;
 
 import cc.mrbird.common.annotation.Log;
 import cc.mrbird.common.controller.BaseController;
+import cc.mrbird.common.domain.QueryRequest;
 import cc.mrbird.common.domain.ResponseBo;
 import cc.mrbird.web.service.NewHouseService;
 import cc.mrbird.web.service.SecondHouseService;
@@ -63,7 +64,12 @@ public class DataController extends BaseController {
     @Log("获取新房所有数据")
     @RequestMapping("newHouseDetail")
     @RequiresPermissions("data:newHouseDetail")
-    public String newHouseDetail() {
+    public String newHouseDetail(QueryRequest queryRequest, String startDate, String endDate, String deviceId) {
+        logger.info(startDate);
+        logger.info(endDate);
+        logger.info(deviceId);
+        logger.info(queryRequest.toString());
+        newHouseService.queryNewHouseDetail(startDate, endDate, deviceId, queryRequest);
         return "web/data/newHouseDetail";
     }
 
@@ -72,6 +78,7 @@ public class DataController extends BaseController {
     @RequestMapping("secondHouseDetail")
     @RequiresPermissions("data:secondHouseDetail")
     public String secondHouseDetail() {
+
         return "web/data/secondHouseDetail";
     }
 

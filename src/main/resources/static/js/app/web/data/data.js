@@ -95,7 +95,7 @@ $(document).ready(function () {
                 zoomType: 'x'
             },
             title: {
-                text: '新房点击率'
+                text: '二手房点击率'
             },
             subtitle: {
                 text: document.ontouchstart === undefined ?

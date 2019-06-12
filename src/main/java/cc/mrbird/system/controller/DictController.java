@@ -37,6 +37,7 @@ public class DictController extends BaseController {
     @RequiresPermissions("dict:list")
     @ResponseBody
     public Map<String, Object> dictList(QueryRequest request, Dict dict) {
+        log.info(request.toString());
         return super.selectByPageNumSize(request, () -> this.dictService.findAllDicts(dict, request));
     }
 

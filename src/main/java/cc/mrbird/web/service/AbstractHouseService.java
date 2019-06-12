@@ -1,5 +1,6 @@
 package cc.mrbird.web.service;
 
+import cc.mrbird.common.domain.QueryRequest;
 import cc.mrbird.common.service.ImpalaService;
 import cc.mrbird.common.util.DateUtil;
 import cc.mrbird.web.domain.CountDate;
@@ -28,6 +29,33 @@ public abstract class AbstractHouseService<T> implements ImpalaService<T> {
         return sql.toString();
     }
 
+
+    protected String getHouseDetailSql(String startDate, String endDate, String sqlTable, String deviceId, QueryRequest queryRequest) {
+        StringBuilder sql = new StringBuilder();
+
+        if (sqlTable.equalsIgnoreCase("newhouselog")) {
+
+            sql.append("select device_id, city_name, prj_itemname,price_show,pic_hx_totalprice,pic_area from newhouselog where 1=1");
+
+        } else if (sqlTable.equalsIgnoreCase("secondhouselog")) {
+
+            sql.append("SELECT device_id,city,blockshowname, averprice_x,buildarea,price from secondhouselog where 1=1");
+
+        }
+
+        if (StringUtils.isNotEmpty(startDate) && StringUtils.isNotEmpty(endDate)) {
+            sql.append(" and data_date between '" + startDate + "' and '" + endDate + "'");
+        }
+
+        if (StringUtils.isNotEmpty(deviceId)) {
+            sql.append(" and device_id='" + deviceId + "'");
+        }
+        sql.append("order by data_date limit " + queryRequest.getPageSize() + " offset " + queryRequest.getPageSize() * queryRequest.getPageNum());
+
+        return sql.toString();
+    }
+
+
     protected long[][] getHouseResult(List list) {
         long[][] result = new long[list.size()][2];
         try {
@@ -40,34 +68,6 @@ public abstract class AbstractHouseService<T> implements ImpalaService<T> {
             e.printStackTrace();
         }
         return result;
-    }
-
-
-    public String getNewHouseDetailSql(String startDate, String endDate, String deviceId, String sqlTable) {
-        StringBuilder sql = new StringBuilder();
-        sql.append("select device_id, city_name, prj_itemname,price_show,pic_hx_totalprice,pic_area from " + sqlTable + " where 1=1");
-        if (StringUtils.isNotEmpty(startDate) && StringUtils.isNotEmpty(endDate)) {
-            sql.append(" and data_date between '" + startDate + "' and '" + endDate + "'");
-        }
-
-        if (StringUtils.isNotEmpty(deviceId)) {
-            sql.append(" and device_id='" + deviceId + "'");
-        }
-        return sql.toString();
-    }
-
-
-    public String getSecondHouseDetailSql(String startDate, String endDate, String deviceId, String sqlTable) {
-        StringBuilder sql = new StringBuilder();
-        sql.append("select device_id, city_name, prj_itemname,price_show,pic_hx_totalprice,pic_area from " + sqlTable + " where 1=1");
-        if (StringUtils.isNotEmpty(startDate) && StringUtils.isNotEmpty(endDate)) {
-            sql.append(" and data_date between '" + startDate + "' and '" + endDate + "'");
-        }
-
-        if (StringUtils.isNotEmpty(deviceId)) {
-            sql.append(" and device_id='" + deviceId + "'");
-        }
-        return sql.toString();
     }
 
 
