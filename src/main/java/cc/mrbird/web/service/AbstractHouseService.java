@@ -39,7 +39,7 @@ public abstract class AbstractHouseService<T> implements ImpalaService<T> {
 
         } else if (sqlTable.equalsIgnoreCase("secondhouselog")) {
 
-            sql.append("SELECT device_id,city,blockshowname, averprice_x,buildarea,price from secondhouselog where 1=1");
+            sql.append("SELECT device_id,city,blockshowname, averprice_x,price,buildarea from secondhouselog where 1=1");
 
         }
 
@@ -50,7 +50,32 @@ public abstract class AbstractHouseService<T> implements ImpalaService<T> {
         if (StringUtils.isNotEmpty(deviceId)) {
             sql.append(" and device_id='" + deviceId + "'");
         }
-        sql.append("order by data_date limit " + queryRequest.getPageSize() + " offset " + queryRequest.getPageSize() * queryRequest.getPageNum());
+        sql.append(" order by device_id limit " + queryRequest.getPageSize() + " offset " + queryRequest.getPageSize() * (queryRequest.getPageNum()-1));
+
+        return sql.toString();
+    }
+
+
+    protected String getHouseDetailCountSql(String startDate, String endDate, String sqlTable, String deviceId) {
+        StringBuilder sql = new StringBuilder();
+
+        if (sqlTable.equalsIgnoreCase("newhouselog")) {
+
+            sql.append("select count(*) from newhouselog where 1=1");
+
+        } else if (sqlTable.equalsIgnoreCase("secondhouselog")) {
+
+            sql.append("SELECT count(*) from secondhouselog where 1=1");
+
+        }
+
+        if (StringUtils.isNotEmpty(startDate) && StringUtils.isNotEmpty(endDate)) {
+            sql.append(" and data_date between '" + startDate + "' and '" + endDate + "'");
+        }
+
+        if (StringUtils.isNotEmpty(deviceId)) {
+            sql.append(" and device_id='" + deviceId + "'");
+        }
 
         return sql.toString();
     }

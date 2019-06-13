@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service("NewHouseService")
 public class NewHouseServiceImpl<T> extends AbstractHouseService<T> implements NewHouseService<T> {
@@ -57,4 +58,11 @@ public class NewHouseServiceImpl<T> extends AbstractHouseService<T> implements N
         return objects;
     }
 
+    @Override
+    public Long queryNewHouseCountDetail(String startDate, String endDate, String deviceId) {
+        String sql = super.getHouseDetailCountSql(startDate, endDate, "newhouselog", deviceId);
+        logger.info("sql:" + sql);
+        Map<String, Object> objectMap = jdbcTemplate.queryForMap(sql);
+        return (Long) objectMap.get("expr_0");
+    }
 }

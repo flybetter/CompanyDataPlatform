@@ -9,4 +9,6 @@ import java.util.List;
 public interface NewHouseService<T> extends ImpalaService<T> {
     List<T> queryNewHouseDetail(String startDate, String endDate, String deviceId, QueryRequest queryRequest);
 
+    Long queryNewHouseCountDetail(String startDate, String endDate, String deviceId);
+
 }

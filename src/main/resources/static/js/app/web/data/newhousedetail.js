@@ -1,5 +1,20 @@
 $(function () {
     var $newhouseTableForm = $(".newhouse-table-form");
+
+    $('input[name="startDate"]').daterangepicker({
+        singleDatePicker: true,
+        locale: {
+            format: 'YYYY-MM-DD'
+        },
+    });
+
+    $('input[name="endDate"]').daterangepicker({
+        singleDatePicker: true,
+        locale: {
+            format: 'YYYY-MM-DD'
+        },
+    });
+
     var settings = {
         url: ctx + "data/newHouseDetail",
         pageSize: 10,
@@ -14,7 +29,7 @@ $(function () {
         },
         columns: [
             {
-                field: 'deviceId',
+                field: 'device_id',
                 title: '设备Id',
                 width: 150
             }, {
@@ -29,23 +44,24 @@ $(function () {
             }, {
                 field: 'pic_hx_totalprice',
                 title: '总价'
-            },{
+            }, {
                 field: 'pic_area',
                 title: '面积'
             }
         ]
     };
-    $MB.initTable('newhouseTable', settings);
+    $MB.initTable('newHouseTable', settings);
 });
 
 function search() {
-    $MB.refreshTable('newhouseTable');
+    $MB.refreshTable('newHouseTable');
 }
 
 function refresh() {
     $(".newhouse-table-form")[0].reset();
     search();
 }
+
 
 function deleteDicts() {
     var selected = $("#dictTable").bootstrapTable('getSelections');
