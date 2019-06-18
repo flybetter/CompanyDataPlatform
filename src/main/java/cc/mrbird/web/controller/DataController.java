@@ -8,6 +8,7 @@ import cc.mrbird.web.domain.NewHouseDetail;
 import cc.mrbird.web.domain.SecondHouseDetail;
 import cc.mrbird.web.service.NewHouseService;
 import cc.mrbird.web.service.SecondHouseService;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,9 +106,5 @@ public class DataController extends BaseController {
         rspData.put("total", count);
         return rspData;
     }
-
-
-
-
 
 }

@@ -16,53 +16,22 @@ import java.beans.PropertyVetoException;
 
 @Configuration
 public class DruidConfiguration {
-    @Value("${c3p0.DriverClass}")
-    private String driverClass;
-
-    @Value("${c3p0.initialPoolSize}")
-    private Integer initialPoolSize;
-
-    @Value("${c3p0.maxIdleTime}")
-    private Integer maxIdleTime;
-
-    @Value("${c3p0.JdbcUrl}")
-    private String jdbcUrl;
-
-    @Value("${c3p0.AcquireIncrement}")
-    private Integer acquireIncrement;
-
-    @Value("${c3p0.MinPoolSize}")
-    private Integer minPoolSize;
-
-    @Value("${c3p0.MaxPoolSize}")
-    private Integer maxPoolSize;
 
     @Primary
-    @Bean
-    @ConfigurationProperties("spring.datasource.druid")
+    @Bean(name = "mysqlDataSource")
+    @ConfigurationProperties("spring.datasource.druid.mysql")
     public DataSource dataSourceOne() {
         return DruidDataSourceBuilder.create().build();
     }
 
-    @Bean(name = "baseDataSource")
-    public DataSource dataSource() {
-        ComboPooledDataSource cpds = new ComboPooledDataSource();
-        try {
-            cpds.setDriverClass(driverClass);
-        } catch (PropertyVetoException e) {
-            e.printStackTrace();
-        }
-        cpds.setJdbcUrl(jdbcUrl);
-        cpds.setInitialPoolSize(initialPoolSize);
-        cpds.setMaxIdleTime(maxIdleTime);
-        cpds.setMinPoolSize(minPoolSize);
-        cpds.setAcquireIncrement(acquireIncrement);
-        cpds.setMaxPoolSize(minPoolSize);
-        return cpds;
+    @Bean(name = "impalaDataSource")
+    @ConfigurationProperties("spring.datasource.druid.impala")
+    public DataSource dataSourceTwo() {
+        return DruidDataSourceBuilder.create().build();
     }
 
     @Bean(name = "secondaryJdbcTemplate")
-    public JdbcTemplate secondaryTemplate(@Qualifier("baseDataSource") DataSource dataSource) {
+    public JdbcTemplate secondaryTemplate(@Qualifier("impalaDataSource") DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
 
