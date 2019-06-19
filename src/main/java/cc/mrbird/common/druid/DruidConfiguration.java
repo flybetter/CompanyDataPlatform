@@ -2,6 +2,8 @@ package cc.mrbird.common.druid;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -18,20 +20,21 @@ import java.beans.PropertyVetoException;
 public class DruidConfiguration {
 
     @Primary
-    @Bean(name = "mysqlDataSource")
+    @Bean
     @ConfigurationProperties("spring.datasource.druid.mysql")
     public DataSource dataSourceOne() {
         return DruidDataSourceBuilder.create().build();
     }
 
-    @Bean(name = "impalaDataSource")
-    @ConfigurationProperties("spring.datasource.druid.impala")
-    public DataSource dataSourceTwo() {
-        return DruidDataSourceBuilder.create().build();
+    @Bean(name = "baseDataSource")
+    @ConfigurationProperties("c3p0")
+    public DataSource dataSource() {
+        return new ComboPooledDataSource();
     }
 
+
     @Bean(name = "secondaryJdbcTemplate")
-    public JdbcTemplate secondaryTemplate(@Qualifier("impalaDataSource") DataSource dataSource) {
+    public JdbcTemplate secondaryTemplate(@Qualifier("baseDataSource") DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
 

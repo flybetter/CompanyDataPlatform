@@ -86,14 +86,14 @@ spring:
         test-on-return: false
 
 
-#            c3p0:
-#  DriverClass: com.cloudera.impala.jdbc41.Driver
-#  initialPoolSize: 3
-#  maxIdleTime: 60
-#  JdbcUrl: jdbc:impala://192.168.10.164:21050/user_track;AuthMech=0;
-#  AcquireIncrement: 3
-#  MinPoolSize: 3
-#  MaxPoolSize: 15
+c3p0:
+  DriverClass: com.cloudera.impala.jdbc41.Driver
+  initialPoolSize: 3
+  maxIdleTime: 60
+  JdbcUrl: jdbc:impala://192.168.10.164:21050/user_track;AuthMech=0;
+  AcquireIncrement: 3
+  MinPoolSize: 3
+  MaxPoolSize: 15
 
 
 
