@@ -1,6 +1,7 @@
 package cc.mrbird.web.service.impl;
 
 import cc.mrbird.common.domain.QueryRequest;
+import cc.mrbird.web.dao.SecondHouseMapper;
 import cc.mrbird.web.domain.CountDate;
 import cc.mrbird.web.domain.NewHouseDetail;
 import cc.mrbird.web.domain.SecondHouseDetail;
@@ -24,32 +25,23 @@ public class SecondHouseServiceImpl<T> extends AbstractHouseService<T> implement
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    @Qualifier("secondaryJdbcTemplate")
-    private JdbcTemplate jdbcTemplate;
+    private SecondHouseMapper secondHouseMapper;
 
     @Override
     public String queryCountList(String startDate, String endDate, String deviceId) {
-        String sql = super.getHouseCountSql(startDate, endDate, "secondhouselog", deviceId);
-        List<CountDate> objects = (List<CountDate>) jdbcTemplate.query(sql, new BeanPropertyRowMapper<CountDate>(CountDate.class));
-        long[][] result = super.getHouseResult(objects);
+        List<CountDate> countDates = secondHouseMapper.queryCountAndDataDateByStartDateAndEndDate(startDate, endDate, deviceId);
+        long[][] result = super.getHouseResult(countDates);
         return JSON.toJSONString(result);
     }
 
-
     @Override
     public List<T> querySecondHouseDetail(String startDate, String endDate, String deviceId, QueryRequest queryRequest) {
-        String sql = super.getHouseDetailSql(startDate, endDate, "secondhouselog", deviceId, queryRequest);
-        logger.info("sql:" + sql);
-        List<T> objects = (List<T>) jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(SecondHouseDetail.class));
-        return objects;
-
+        List<T> newHouses = (List<T>) secondHouseMapper.queryByStartDateAndEndDateAndDeviceIds(startDate, endDate, deviceId, queryRequest);
+        return newHouses;
     }
 
     @Override
     public Long querySecondHouseCountDetail(String startDate, String endDate, String deviceId) {
-        String sql = super.getHouseDetailCountSql(startDate, endDate, "secondhouselog", deviceId);
-        logger.info("sql:" + sql);
-        Map<String, Object> objectMap = jdbcTemplate.queryForMap(sql);
-        return (Long) objectMap.get("expr_0");
+        return secondHouseMapper.queryCountByStartDateAndEndDateAndDeviceIds(startDate, endDate, deviceId);
     }
 }

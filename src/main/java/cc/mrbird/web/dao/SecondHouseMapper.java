@@ -7,9 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-
-public interface NewHouseMapper {
-
+public interface SecondHouseMapper {
     Long queryCountByStartDateAndEndDateAndDeviceIds(@Param("startDate") String startDate, @Param("endDate") String endDate,
                                                      @Param("deviceId") String deviceId);
 

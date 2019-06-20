@@ -124,13 +124,13 @@ jasypt:
   encryptor:
     password: febs
 
-mybatis:
-  # type-aliases扫描路径
-  type-aliases-package: cc.mrbird.system.domain,cc.mrbird.job.domain
-  # mapper xml实现扫描路径
-  mapper-locations: classpath:mapper/job/*.xml,classpath:mapper/system/*.xml
-  configuration:
-    jdbc-type-for-null: null
+#mybatis:
+#  # type-aliases扫描路径
+#  type-aliases-package: cc.mrbird.system.domain,cc.mrbird.job.domain
+#  # mapper xml实现扫描路径
+#  mapper-locations: classpath:mapper/job/*.xml,classpath:mapper/system/*.xml
+#  configuration:
+#    jdbc-type-for-null: null
 
 mapper:
   mappers: cc.mrbird.common.config.MyMapper

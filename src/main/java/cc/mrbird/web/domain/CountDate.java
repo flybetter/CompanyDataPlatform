@@ -1,9 +1,11 @@
 package cc.mrbird.web.domain;
 
 import cc.mrbird.common.util.DateUtil;
+import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
 
+@Alias("countdate")
 public class CountDate {
 
     private Integer count;
