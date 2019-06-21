@@ -31,4 +31,11 @@ public class FebsConstant {
     public static final String ONE_ESSAY_URL = "http://v3.wufazhuce.com:8000/api/essay/";
 
     public static final String ONE_ESSAY_COMMENT_URL = "http://v3.wufazhuce.com:8000/api/comment/praiseandtime/essay/";
+
+    public static final String CUSTOM_MOBILE_URL = "http://192.168.111.1/statquery/v0/mobile/";
+
+    public static final String CUSTOM_ITEMNAME_URL = "http://192.168.111.1/statquery/v0/itemname/";
+
+//    public static final String CUSTOM_ITEMNAME_COUNT_URL = "http://192.168.111.1/statquery/v0/itemname/count/";
+
 }

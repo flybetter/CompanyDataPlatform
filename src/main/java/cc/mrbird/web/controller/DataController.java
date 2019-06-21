@@ -4,20 +4,28 @@ import cc.mrbird.common.annotation.Log;
 import cc.mrbird.common.controller.BaseController;
 import cc.mrbird.common.domain.QueryRequest;
 import cc.mrbird.common.domain.ResponseBo;
+import cc.mrbird.common.util.FebsConstant;
+import cc.mrbird.common.util.HttpUtils;
+import cc.mrbird.web.domain.CustomItemName;
+import cc.mrbird.web.domain.CustomMobile;
 import cc.mrbird.web.domain.NewHouseDetail;
 import cc.mrbird.web.domain.SecondHouseDetail;
 import cc.mrbird.web.service.NewHouseService;
 import cc.mrbird.web.service.SecondHouseService;
-import org.apache.ibatis.session.SqlSession;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.assertj.core.api.UrlAssert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,5 +114,67 @@ public class DataController extends BaseController {
         rspData.put("total", count);
         return rspData;
     }
+
+
+    @Log("楼盘查询页面")
+    @RequestMapping("customItemNamePage")
+    @RequiresPermissions("data:customItemNamePage")
+    public String customItemNamePage() {
+        return "web/data/customItemNamePage";
+    }
+
+
+    @Log("手机号查询页面")
+    @RequestMapping("customMobilePage")
+    @RequiresPermissions("data:customMobilePage")
+    public String customMobilePage() {
+        return "web/data/customMobilePage";
+    }
+
+    @Log("楼盘查询")
+    @RequestMapping("customItemName")
+    @ResponseBody
+    public Map<String, Object> customItemName(QueryRequest queryRequest, String startDate, String endDate, String city, String itemName) {
+        try {
+            Map<String, Object> rspData = new HashMap<>();
+            itemName = URLEncoder.encode(itemName, "UTF-8");
+            city = URLEncoder.encode(city, "UTF-8");
+            String data = HttpUtils.sendGet(FebsConstant.CUSTOM_ITEMNAME_URL + itemName, "from=" + startDate + "&to=" + endDate + "&city_name=" + city + "&limit=" + queryRequest.getPageSize() + "&offset=" + ((queryRequest.getPageNum() - 1) * queryRequest.getPageSize()));
+            logger.info("**result:" + data);
+            List<CustomItemName> customItemNames = JSONObject.parseArray(data, CustomItemName.class);
+            String data2 = HttpUtils.sendGet(FebsConstant.CUSTOM_ITEMNAME_URL + itemName + "/count", "from=" + startDate + "&to=" + endDate + "&city_name=" + city);
+            logger.info("**result:" + data2);
+            JSONArray array = JSONObject.parseArray(data2);
+            rspData.put("rows", customItemNames);
+            logger.info(((JSONObject)array.get(0)).get("counting").toString());
+            rspData.put("total", ((JSONObject)array.get(0)).get("counting"));
+            return rspData;
+        } catch (Exception e) {
+            logger.error("查询失败!", e);
+            return ResponseBo.error("查询失败!");
+        }
+    }
+
+
+    @Log("手机号查询")
+    @RequestMapping("customMobile")
+    @ResponseBody
+    public Map<String, Object> customMobile(QueryRequest queryRequest, String startDate, String endDate, String phoneNumber, String city) {
+        try {
+            Map<String, Object> rspData = new HashMap<>();
+            city = URLEncoder.encode(city, "UTF-8");
+            String data = HttpUtils.sendGet(FebsConstant.CUSTOM_MOBILE_URL + phoneNumber, "from=" + startDate + "&to=" + endDate + "&city_name=" + city);
+            List<CustomMobile> customMobiles = JSONObject.parseArray(data, CustomMobile.class);
+            PageHelper.startPage(queryRequest.getPageNum(), queryRequest.getPageSize());
+            PageInfo pageInfo = new PageInfo<>(customMobiles);
+            rspData.put("rows", pageInfo.getList());
+            rspData.put("total", pageInfo.getSize());
+            return rspData;
+        } catch (Exception e) {
+            logger.error("查询失败!", e);
+            return ResponseBo.error("查询失败!");
+        }
+    }
+
 
 }
