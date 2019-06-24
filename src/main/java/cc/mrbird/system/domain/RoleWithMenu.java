@@ -1,5 +1,7 @@
 package cc.mrbird.system.domain;
 
+import org.apache.ibatis.type.Alias;
+
 import java.util.List;
 
 public class RoleWithMenu extends Role{

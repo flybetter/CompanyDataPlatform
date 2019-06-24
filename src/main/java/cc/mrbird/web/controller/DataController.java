@@ -140,14 +140,11 @@ public class DataController extends BaseController {
             itemName = URLEncoder.encode(itemName, "UTF-8");
             city = URLEncoder.encode(city, "UTF-8");
             String data = HttpUtils.sendGet(FebsConstant.CUSTOM_ITEMNAME_URL + itemName, "from=" + startDate + "&to=" + endDate + "&city_name=" + city + "&limit=" + queryRequest.getPageSize() + "&offset=" + ((queryRequest.getPageNum() - 1) * queryRequest.getPageSize()));
-            logger.info("**result:" + data);
             List<CustomItemName> customItemNames = JSONObject.parseArray(data, CustomItemName.class);
             String data2 = HttpUtils.sendGet(FebsConstant.CUSTOM_ITEMNAME_URL + itemName + "/count", "from=" + startDate + "&to=" + endDate + "&city_name=" + city);
-            logger.info("**result:" + data2);
             JSONArray array = JSONObject.parseArray(data2);
             rspData.put("rows", customItemNames);
-            logger.info(((JSONObject)array.get(0)).get("counting").toString());
-            rspData.put("total", ((JSONObject)array.get(0)).get("counting"));
+            rspData.put("total", ((JSONObject) array.get(0)).get("counting"));
             return rspData;
         } catch (Exception e) {
             logger.error("查询失败!", e);

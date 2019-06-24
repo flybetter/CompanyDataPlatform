@@ -5,7 +5,7 @@ import org.apache.ibatis.type.Alias;
 @Alias("secondhouse")
 public class SecondHouse {
 
-    private String  device_id;
+    private String device_id;
     private String city;
     private String blockshowname;
     private String averprice_x;

@@ -3,14 +3,19 @@ $(function () {
     var $customItemNamePageTableForm = $(".customItemNamePage-form");
 
     $('input[name="startDate"]').daterangepicker({
+        startDate: moment().subtract(6, 'days'),
         singleDatePicker: true,
+        showDropdowns: true,
         locale: {
             format: 'YYYY-MM-DD'
         },
+
+
     });
 
     $('input[name="endDate"]').daterangepicker({
         singleDatePicker: true,
+        showDropdowns: true,
         locale: {
             format: 'YYYY-MM-DD'
         },
@@ -33,7 +38,10 @@ $(function () {
             {
                 field: 'device_id',
                 title: '设备Id',
-                width: 150
+                width: '50%'
+            }, {
+                field: 'login_account',
+                title: '手机号'
             }, {
                 field: 'counting',
                 title: '次数'

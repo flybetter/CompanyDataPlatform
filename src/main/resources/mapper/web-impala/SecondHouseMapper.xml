@@ -28,7 +28,7 @@
     </select>
 
     <select id="queryByStartDateAndEndDateAndDeviceIds" resultType="secondhouse">
-        select device_id,city_name,prj_itemname,price_show,pic_hx_totalprice,pic_area from secondhouselog
+        select device_id,city,blockshowname, averprice_x,buildarea,price  from secondhouselog
         <where>
             <if test="deviceId !=null and deviceId.length()>0">
                 deviceId =#{deviceId}

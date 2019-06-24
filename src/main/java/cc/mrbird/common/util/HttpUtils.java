@@ -40,6 +40,7 @@ public class HttpUtils {
      */
     public static String sendGet(String url, String param) throws IOException {
         String urlNameString = url + "?" + param;
+//        log.info(urlNameString);
         URL realUrl = new URL(urlNameString);
         URLConnection connection = realUrl.openConnection();
         StringBuilder result = new StringBuilder();
@@ -47,7 +48,7 @@ public class HttpUtils {
         connection.setRequestProperty(CONNECTION, CONNECTION_VALUE);
         connection.setRequestProperty(ACCEPT, "*/*");
         connection.connect();
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(),"utf-8"))) {
             String line;
             while ((line = in.readLine()) != null) {
                 result.append(line);
@@ -143,10 +144,10 @@ public class HttpUtils {
 
     private static class TrustAnyHostnameVerifier implements HostnameVerifier {
         public boolean verify(String hostname, SSLSession session) {
-           return true;
+            return true;
         }
     }
-    
+
     public static boolean isAjaxRequest(HttpServletRequest request) {
         return (request.getHeader("X-Requested-With") != null
                 && "XMLHttpRequest".equals(request.getHeader("X-Requested-With")));

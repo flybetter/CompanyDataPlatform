@@ -2,7 +2,9 @@ $(function () {
     var $customMobilePageTableForm = $(".customMobilePage-form");
 
     $('input[name="startDate"]').daterangepicker({
+        startDate: moment().subtract(6, 'days'),
         singleDatePicker: true,
+        showDropdowns: true,
         locale: {
             format: 'YYYY-MM-DD'
         },
@@ -10,6 +12,7 @@ $(function () {
 
     $('input[name="endDate"]').daterangepicker({
         singleDatePicker: true,
+        showDropdowns: true,
         locale: {
             format: 'YYYY-MM-DD'
         },
@@ -32,7 +35,8 @@ $(function () {
             {
                 field: 'device_id',
                 title: '设备Id',
-                width: 150
+                width: '50%'
+
             }, {
                 field: 'prj_itemname',
                 title: '小区名称'

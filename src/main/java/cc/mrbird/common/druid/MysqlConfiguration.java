@@ -3,11 +3,13 @@ package cc.mrbird.common.druid;
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.apache.commons.collections.ArrayStack;
+import org.apache.ibatis.io.VFS;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.assertj.core.util.Lists;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -44,13 +46,14 @@ public class MysqlConfiguration {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSourceOne());
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        VFS.addImplClass(SpringBootVFS.class);
+        bean.setTypeAliasesPackage("cc.mrbird.system.domain,cc.mrbird.job.domain");
         Resource[] jobresources = resolver.getResources("classpath:mapper/job/*.xml");
         Resource[] systemresources = resolver.getResources("classpath:mapper/system/*.xml");
         Resource[] finalresources = new Resource[jobresources.length + systemresources.length];
         System.arraycopy(jobresources, 0, finalresources, 0, jobresources.length);
         System.arraycopy(systemresources, 0, finalresources, jobresources.length, systemresources.length);
         bean.setMapperLocations(finalresources);
-        bean.setTypeAliasesPackage("cc.mrbird.system.domain,cc.mrbird.job.domain");
         return bean.getObject();
     }
 
