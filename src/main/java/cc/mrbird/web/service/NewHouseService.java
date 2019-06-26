@@ -11,4 +11,8 @@ public interface NewHouseService<T> extends ImpalaService<T> {
 
     Long queryNewHouseCountDetail(String startDate, String endDate, String deviceId);
 
+    List<T> queryCountAndDataDateByStartDateAndEndDateAndItemName(String startDate, String endDate, String itemName);
+
+    String queryCountAndDataDateUTCByStartDateAndEndDateAndItemName(String startDate, String endDate, String itemName);
+
 }

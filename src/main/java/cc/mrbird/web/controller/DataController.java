@@ -6,10 +6,7 @@ import cc.mrbird.common.domain.QueryRequest;
 import cc.mrbird.common.domain.ResponseBo;
 import cc.mrbird.common.util.FebsConstant;
 import cc.mrbird.common.util.HttpUtils;
-import cc.mrbird.web.domain.CustomItemName;
-import cc.mrbird.web.domain.CustomMobile;
-import cc.mrbird.web.domain.NewHouseDetail;
-import cc.mrbird.web.domain.SecondHouseDetail;
+import cc.mrbird.web.domain.*;
 import cc.mrbird.web.service.NewHouseService;
 import cc.mrbird.web.service.SecondHouseService;
 import com.alibaba.fastjson.JSONArray;
@@ -164,6 +161,33 @@ public class DataController extends BaseController {
             List<CustomMobile> customMobiles = JSONObject.parseArray(data, CustomMobile.class);
             PageHelper.startPage(queryRequest.getPageNum(), queryRequest.getPageSize());
             PageInfo pageInfo = new PageInfo<>(customMobiles);
+            rspData.put("rows", pageInfo.getList());
+            rspData.put("total", pageInfo.getSize());
+            return rspData;
+        } catch (Exception e) {
+            logger.error("查询失败!", e);
+            return ResponseBo.error("查询失败!");
+        }
+    }
+
+
+    @Log("楼盘点击次数查询页面")
+    @RequestMapping("buildingCountPage")
+    @RequiresPermissions("data:buildingCountPage")
+    public String buildingCountPage() {
+        return "web/data/buildingCountPage";
+    }
+
+
+    @Log("楼盘点击次数查询")
+    @RequestMapping("buildingCount")
+    @ResponseBody
+    public Map<String, Object> buildingCount(QueryRequest queryRequest, String startDate, String endDate, String itemName) {
+        try {
+            Map<String, Object> rspData = new HashMap<>();
+            List<CountDate> buildingCountList = newHouseService.queryCountAndDataDateByStartDateAndEndDateAndItemName(startDate, endDate, itemName);
+            PageHelper.startPage(queryRequest.getPageNum(), queryRequest.getPageSize());
+            PageInfo pageInfo = new PageInfo<>(buildingCountList);
             rspData.put("rows", pageInfo.getList());
             rspData.put("total", pageInfo.getSize());
             return rspData;

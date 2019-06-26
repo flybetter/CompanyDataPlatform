@@ -13,7 +13,7 @@
                 and data_date between #{startDate} and #{endDate}
             </if>
         </where>
-            group by data_date order by data_date
+        group by data_date order by data_date
     </select>
 
     <select id="queryCountByStartDateAndEndDateAndDeviceIds" resultType="long">
@@ -43,4 +43,17 @@
         limit #{queryRequest.pageSize} offset #{key_offset}
     </select>
 
+
+    <select id="queryCountAndDataDateByStartDateAndEndDateAndItemName" resultType="countdate">
+        select count(*) as count, data_date from newhouselog
+        <where>
+            <if test=" itemName !=null and itemName.length()>0">
+                and prj_itemname=#{itemName}
+            </if>
+            <if test="startDate !=null and endDate !=null and startDate.length()>0 and endDate.length()>0 ">
+                and data_date between #{startDate} and #{endDate}
+            </if>
+        </where>
+        group by data_date order by data_date
+    </select>
 </mapper>

@@ -18,4 +18,8 @@ public interface NewHouseMapper {
 
     List<CountDate> queryCountAndDataDateByStartDateAndEndDate(@Param("startDate") String startDate, @Param("endDate") String endDate,
                                                                @Param("deviceId") String deviceId);
+
+    List<CountDate> queryCountAndDataDateByStartDateAndEndDateAndItemName(@Param("startDate") String startDate, @Param("endDate") String endDate,
+                                                                          @Param("itemName") String itemName);
+
 }

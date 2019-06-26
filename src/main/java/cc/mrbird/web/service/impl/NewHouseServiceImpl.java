@@ -46,4 +46,18 @@ public class NewHouseServiceImpl<T> extends AbstractHouseService<T> implements N
     public Long queryNewHouseCountDetail(String startDate, String endDate, String deviceId) {
         return newHouseMapper.queryCountByStartDateAndEndDateAndDeviceIds(startDate, endDate, deviceId);
     }
+
+
+    @Override
+    public List<T> queryCountAndDataDateByStartDateAndEndDateAndItemName(String startDate, String endDate, String itemName) {
+        return (List<T>) newHouseMapper.queryCountAndDataDateByStartDateAndEndDateAndItemName(startDate, endDate, itemName);
+    }
+
+
+    @Override
+    public String queryCountAndDataDateUTCByStartDateAndEndDateAndItemName(String startDate, String endDate, String itemName) {
+        List<CountDate> countDates = newHouseMapper.queryCountAndDataDateByStartDateAndEndDateAndItemName(startDate, endDate, itemName);
+        long[][] result = super.getHouseResult(countDates);
+        return JSON.toJSONString(result);
+    }
 }

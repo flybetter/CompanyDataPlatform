@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
-
 @Configuration
 @MapperScan(basePackages = "cc.mrbird.web.dao", sqlSessionFactoryRef = "impalaSqlSessionFactory")
 public class ImpalaConfiguration {
@@ -46,7 +45,6 @@ public class ImpalaConfiguration {
         return new SqlSessionTemplate(impalaSqlSessionFactory());
     }
 
-
     @Bean
     public MapperFactoryBean<NewHouseMapper> newHouseMapper() throws Exception {
         MapperFactoryBean<NewHouseMapper> factoryBean = new MapperFactoryBean<>(NewHouseMapper.class);
@@ -54,10 +52,5 @@ public class ImpalaConfiguration {
         return factoryBean;
     }
 
-
-//    @Bean(name = "secondaryJdbcTemplate")
-//    public JdbcTemplate secondaryTemplate(@Qualifier("baseDataSource") DataSource dataSource) {
-//        return new JdbcTemplate(dataSource);
-//    }
 
 }
