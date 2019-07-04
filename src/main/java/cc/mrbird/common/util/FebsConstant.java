@@ -36,6 +36,11 @@ public class FebsConstant {
 
     public static final String CUSTOM_ITEMNAME_URL = "http://192.168.111.1/statquery/v0/itemname/";
 
+    public static final String CUSTOM_DEVICES_URL = "http://192.168.111.1/statquery/v0/devices";
+
+    public static final String CUSTOM_DEVICES_COUNT_URL = "http://192.168.111.1/statquery/v0/devices/count";
+
+
 //    public static final String CUSTOM_ITEMNAME_COUNT_URL = "http://192.168.111.1/statquery/v0/itemname/count/";
 
 }

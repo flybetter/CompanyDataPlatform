@@ -1,0 +1,160 @@
+<div class="card">
+    <div class="card-block">
+        <div class="table-responsive">
+            <div id="data-table_wrapper" class="dataTables_wrapper">
+                <div class="dataTables_buttons hidden-sm-down actions">
+                    <span class="actions__item zmdi zmdi-search" onclick="search()" title="搜索"/>
+                </div>
+                <div id="data-table_filter" class="dataTables_filter">
+                    <form class="devices-table-form">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+					                	总价：
+					                </span>
+                                    <div class="form-group">
+                                        <div class="form-group btn-group">
+                                            <div class="input-icon right dropdown-toggle " data-toggle="dropdown">
+                                                <i class="fa fa-angle-down font-blue"></i>
+                                                <input type="text" class="form-control input-small" id="totalValue">
+                                            </div>
+                                            <div class="dropdown-menu dropdown-content" role="menu">
+                                                <input id="totalSlider" type="text" data-stopPropagation="true"
+                                                       data-slider-min="0"
+                                                       data-slider-max="1000"
+                                                       data-slider-step="0.5"
+                                                       data-slider-value="[10,500]"
+                                                       data-slider-tooltip="hide"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+					               	单价:
+					            </span>
+                                    <div class="form-group">
+                                        <div class="form-group btn-group">
+                                            <div class="input-icon right dropdown-toggle " data-toggle="dropdown">
+                                                <i class="fa fa-angle-down font-blue"></i>
+                                                <input type="text" class="form-control input-small" id="priceValue">
+                                            </div>
+                                            <div class="dropdown-menu dropdown-content" role="menu">
+                                                <input id="priceSlider" type="text" data-stopPropagation="true"
+                                                       data-slider-min="0"
+                                                       data-slider-max="10000"
+                                                       data-slider-step="0.5"
+                                                       data-slider-value="[10,10000]"
+                                                       data-slider-tooltip="hide"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+					               	面积：
+					            </span>
+                                    <div class="form-group">
+                                        <div class="form-group btn-group">
+                                            <div class="input-icon right dropdown-toggle " data-toggle="dropdown">
+                                                <i class="fa fa-angle-down font-blue"></i>
+                                                <input type="text" class="form-control input-small" id="areaValue">
+                                            </div>
+                                            <div class="dropdown-menu dropdown-content" role="menu">
+                                                <input id="areaSlider" type="text" data-stopPropagation="true"
+                                                       data-slider-min="0"
+                                                       data-slider-max="1000"
+                                                       data-slider-step="0.5"
+                                                       data-slider-value="[10,500]"
+                                                       data-slider-tooltip="hide"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+					               	室：
+					            </span>
+                                    <div class="form-group">
+                                        <input type="text" name="shi" class="form-control">
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+					               	厅：
+					            </span>
+                                    <div class="form-group">
+                                        <input type="text" name="ting" class="form-control">
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+					               	卫生间：
+					            </span>
+                                    <div class="form-group">
+                                        <input type="text" name="wei" class="form-control ">
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+					               	楼盘名称：
+					            </span>
+                                    <div class="form-group">
+                                        <input type="text" name="item" class="form-control">
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+					               	楼层：
+					            </span>
+                                    <div class="form-group">
+                                        <input type="text" name="flat" class="form-control">
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+					               	城市：
+					            </span>
+                                    <div class="form-group">
+                                        <input type="text" name="city_name" class="form-control" value="南京">
+                                        <i class="form-group__bar"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </form>
+                </div>
+                <div class="table-responsive">
+                    <table id="devicesTable" data-mobile-responsive="true"
+                           class="mb-bootstrap-table text-nowrap"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script data-th-src="@{js/app/web/data/devicesPage.js}"></script>
+<!--<script data-th-src="@{js/app/system/dict/dictEdit.js}"></script>-->

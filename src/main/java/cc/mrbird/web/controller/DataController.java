@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.assertj.core.api.UrlAssert;
 import org.slf4j.Logger;
@@ -20,7 +21,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -195,6 +198,105 @@ public class DataController extends BaseController {
             logger.error("查询失败!", e);
             return ResponseBo.error("查询失败!");
         }
+
+    }
+
+
+    @Log("设备号查询页面")
+    @RequestMapping("devicesPage")
+    @RequiresPermissions("data:devicesPage")
+    public String devicesPage() {
+        return "web/data/devicesPage";
+    }
+
+
+    @Log("设备号查询页面")
+    @RequestMapping("devices")
+    @ResponseBody
+    public Map<String, Object> devices(QueryRequest queryRequest, String city_name, Integer shi, Integer ting, Integer wei, String item, Integer flat,
+                                       String total, String price, String area) {
+        try {
+            Map<String, Object> rspData = new HashMap<>();
+
+            String totalUrl = DataController.url_split(total, "total[]=");
+            String priceUrl = DataController.url_split(price, "price[]=");
+            String areaUrl = DataController.url_split(area, "area[]=");
+
+            item = URLEncoder.encode(item, "UTF-8");
+            city_name = URLEncoder.encode(city_name, "UTF-8");
+            StringBuilder url = new StringBuilder();
+
+            if (totalUrl!=null){
+                url.append(totalUrl + "&");
+            }
+
+            if (priceUrl!=null){
+                url.append(priceUrl + "&");
+            }
+
+            if (areaUrl!=null){
+                url.append(areaUrl + "&");
+            }
+
+            if (shi!=null){
+                url.append("shi=" + shi + "&");
+            }
+
+            if (ting!=null){
+                url.append("ting=" + ting + "&");
+            }
+
+            if (city_name!=null){
+                url.append("city_name=" + city_name + "&");
+            }
+
+            if (wei!=null){
+                url.append("wei=" + wei + "&");
+            }
+
+            if (item!=null){
+                url.append("item=" + item + "&");
+            }
+
+            if (flat!=null){
+                url.append("flat=" + flat + "&");
+            }
+
+            String data2 = HttpUtils.sendGet(FebsConstant.CUSTOM_DEVICES_COUNT_URL, null);
+            JSONArray array = JSONObject.parseArray(data2);
+            url.append("limit=" + queryRequest.getPageSize() + "&offset=" + ((queryRequest.getPageNum() - 1) * queryRequest.getPageSize()));
+            String data = HttpUtils.sendGet(FebsConstant.CUSTOM_DEVICES_URL, url.toString());
+            List<Device> devices = JSONObject.parseArray(data, Device.class);
+            rspData.put("rows", devices);
+            rspData.put("total", ((JSONObject) array.get(0)).get("counting"));
+            return rspData;
+        } catch (Exception e) {
+            logger.error("查询失败!", e);
+            return ResponseBo.error("查询失败!");
+        }
+
+    }
+
+
+    public static String url_split(String url, String pattern) {
+        if (url.isEmpty()) {
+            return null;
+        }
+        String[] urls = url.split("~");
+        for (int i = 0; i < urls.length; i++) {
+            urls[i] = new String(pattern + urls[i]);
+        }
+
+        return StringUtils.join(urls, "&");
+    }
+
+    public static void main(String[] args) {
+
+        String demo = "200~300";
+
+        String result = DataController.url_split(demo, "total[]=");
+        System.out.println(result);
+
     }
 
 

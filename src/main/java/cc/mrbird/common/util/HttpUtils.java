@@ -40,7 +40,7 @@ public class HttpUtils {
      */
     public static String sendGet(String url, String param) throws IOException {
         String urlNameString = url + "?" + param;
-//        log.info(urlNameString);
+        log.info(urlNameString);
         URL realUrl = new URL(urlNameString);
         URLConnection connection = realUrl.openConnection();
         StringBuilder result = new StringBuilder();
