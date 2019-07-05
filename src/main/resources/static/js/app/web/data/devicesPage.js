@@ -63,6 +63,9 @@ $(function () {
             }, {
                 field: 'wei',
                 title: '卫生间'
+            },{
+                field: 'area',
+                title: '面积'
             }, {
                 field: 'item',
                 title: '小区名'

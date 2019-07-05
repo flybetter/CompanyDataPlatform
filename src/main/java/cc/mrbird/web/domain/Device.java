@@ -8,6 +8,15 @@ public class Device {
     private Integer ting;
     private Integer wei;
     private String item;
+    private Double area;
+
+    public Double getArea() {
+        return area;
+    }
+
+    public void setArea(Double area) {
+        this.area = area;
+    }
 
     public String getDevice_id() {
         return device_id;

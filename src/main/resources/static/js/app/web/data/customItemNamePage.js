@@ -31,7 +31,8 @@ $(function () {
                 startDate: $customItemNamePageTableForm.find("input[name='startDate']").val().trim(),
                 endDate: $customItemNamePageTableForm.find("input[name='endDate']").val().trim(),
                 itemName: $customItemNamePageTableForm.find("input[name='itemName']").val().trim(),
-                city:$customItemNamePageTableForm.find("input[name='city']").val().trim()
+                city:$customItemNamePageTableForm.find("input[name='city']").val().trim(),
+                has_login_account:$customItemNamePageTableForm.find("#has_login_account").is(':checked')
             };
         },
         columns: [

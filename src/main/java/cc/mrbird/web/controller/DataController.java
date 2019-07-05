@@ -134,14 +134,14 @@ public class DataController extends BaseController {
     @Log("楼盘查询")
     @RequestMapping("customItemName")
     @ResponseBody
-    public Map<String, Object> customItemName(QueryRequest queryRequest, String startDate, String endDate, String city, String itemName) {
+    public Map<String, Object> customItemName(QueryRequest queryRequest, String startDate, String endDate, String city, String itemName, boolean has_login_account) {
         try {
             Map<String, Object> rspData = new HashMap<>();
             itemName = URLEncoder.encode(itemName, "UTF-8");
             city = URLEncoder.encode(city, "UTF-8");
-            String data = HttpUtils.sendGet(FebsConstant.CUSTOM_ITEMNAME_URL + itemName, "from=" + startDate + "&to=" + endDate + "&city_name=" + city + "&limit=" + queryRequest.getPageSize() + "&offset=" + ((queryRequest.getPageNum() - 1) * queryRequest.getPageSize()));
+            String data = HttpUtils.sendGet(FebsConstant.CUSTOM_ITEMNAME_URL + itemName, "from=" + startDate + "&to=" + endDate + "&city_name=" + city + "&has_login_account=" + has_login_account + "&limit=" + queryRequest.getPageSize() + "&offset=" + ((queryRequest.getPageNum() - 1) * queryRequest.getPageSize()));
             List<CustomItemName> customItemNames = JSONObject.parseArray(data, CustomItemName.class);
-            String data2 = HttpUtils.sendGet(FebsConstant.CUSTOM_ITEMNAME_URL + itemName + "/count", "from=" + startDate + "&to=" + endDate + "&city_name=" + city);
+            String data2 = HttpUtils.sendGet(FebsConstant.CUSTOM_ITEMNAME_URL + itemName + "/count", "from=" + startDate + "&to=" + endDate + "&city_name=" + city + "&has_login_account=" + has_login_account);
             JSONArray array = JSONObject.parseArray(data2);
             rspData.put("rows", customItemNames);
             rspData.put("total", ((JSONObject) array.get(0)).get("counting"));
@@ -226,39 +226,39 @@ public class DataController extends BaseController {
             city_name = URLEncoder.encode(city_name, "UTF-8");
             StringBuilder url = new StringBuilder();
 
-            if (totalUrl!=null){
+            if (totalUrl != null) {
                 url.append(totalUrl + "&");
             }
 
-            if (priceUrl!=null){
+            if (priceUrl != null) {
                 url.append(priceUrl + "&");
             }
 
-            if (areaUrl!=null){
+            if (areaUrl != null) {
                 url.append(areaUrl + "&");
             }
 
-            if (shi!=null){
+            if (shi != null) {
                 url.append("shi=" + shi + "&");
             }
 
-            if (ting!=null){
+            if (ting != null) {
                 url.append("ting=" + ting + "&");
             }
 
-            if (city_name!=null){
+            if (city_name != null) {
                 url.append("city_name=" + city_name + "&");
             }
 
-            if (wei!=null){
+            if (wei != null) {
                 url.append("wei=" + wei + "&");
             }
 
-            if (item!=null){
+            if (item != null) {
                 url.append("item=" + item + "&");
             }
 
-            if (flat!=null){
+            if (flat != null) {
                 url.append("flat=" + flat + "&");
             }
 
