@@ -1,6 +1,7 @@
 package cc.mrbird.common.druid;
 
 import cc.mrbird.web.dao.NewHouseMapper;
+import cc.mrbird.web.dao.SecondHouseMapper;
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -24,7 +25,7 @@ import javax.sql.DataSource;
 public class ImpalaConfiguration {
 
 
-    @Bean(name = "baseDataSource")
+    @Bean(name = "impalaDataSource")
     @ConfigurationProperties("c3p0")
     public DataSource dataSource() {
         return new ComboPooledDataSource();
@@ -50,6 +51,19 @@ public class ImpalaConfiguration {
         MapperFactoryBean<NewHouseMapper> factoryBean = new MapperFactoryBean<>(NewHouseMapper.class);
         factoryBean.setSqlSessionTemplate(sqlSession());
         return factoryBean;
+    }
+
+    @Bean
+    public MapperFactoryBean<SecondHouseMapper> secondHouseMapper() throws Exception {
+        MapperFactoryBean<SecondHouseMapper> factoryBean = new MapperFactoryBean<>(SecondHouseMapper.class);
+        factoryBean.setSqlSessionTemplate(sqlSession());
+        return factoryBean;
+    }
+
+
+    @Bean(name = "impalaJDBC")
+    public JdbcTemplate impalaJDBC(@Qualifier("impalaDataSource") DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
     }
 
 
