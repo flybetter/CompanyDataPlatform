@@ -61,10 +61,10 @@ public class ImpalaConfiguration {
     }
 
 
-    @Bean(name = "impalaJDBC")
-    public JdbcTemplate impalaJDBC(@Qualifier("impalaDataSource") DataSource dataSource) {
-        return new JdbcTemplate(dataSource);
-    }
+//    @Bean(name = "impalaJDBC")
+//    public JdbcTemplate impalaJDBC(@Qualifier("impalaDataSource") DataSource dataSource) {
+//        return new JdbcTemplate(dataSource);
+//    }
 
 
 }
