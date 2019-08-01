@@ -19,8 +19,9 @@ public class CRMController {
     public ImpalaSqlService impalaSqlService;
 
     @GetMapping("secondhousestatistic")
-    public List<CRMSecondHouseStatistics> secondhousestatistic(@RequestParam String startDate, @RequestParam String endDate) {
-        List<CRMSecondHouseStatistics> lists = impalaSqlService.customSecondHouseProfile(startDate, endDate);
+    public List<CRMSecondHouseStatistics> secondhousestatistic(@RequestParam String startDate, @RequestParam String endDate, @RequestParam String district) {
+        List<CRMSecondHouseStatistics> lists = impalaSqlService.customSecondHouseProfile(startDate, endDate, district);
         return lists;
     }
+
 }

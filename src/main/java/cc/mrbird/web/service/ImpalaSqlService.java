@@ -7,4 +7,9 @@ import java.util.Map;
 
 public interface ImpalaSqlService {
     public List<CRMSecondHouseStatistics> customSecondHouseProfile(String startDate, String endDate);
+
+
+    public List<CRMSecondHouseStatistics> customSecondHouseProfile(String startDate, String endDate,String district);
+
+
 }
